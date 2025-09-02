@@ -1,10 +1,13 @@
+// src/App.tsx
+
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { HelloWorld } from './src/components/HelloWorld/hello-world';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello World</Text>
+      <HelloWorld />
       <StatusBar style="auto" />
     </View>
   );
