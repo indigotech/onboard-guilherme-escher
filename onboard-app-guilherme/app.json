@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "onboard-app-guilherme",
+    "slug": "onboard-app-guilherme",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.guilhermeescher.onboardappguilherme"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.guilhermeescher.onboardappguilherme"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
