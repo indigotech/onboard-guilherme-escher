@@ -1,6 +1,6 @@
 import { Button, Text, TextInput, View } from "react-native";
 
-export function LoginScreen() {
+export default function LoginScreen() {
 	return (
 		<View>
 			<Text>Bem-vindo(a) à Taqtile!</Text>
