@@ -1,0 +1,15 @@
+import { Button, Text, TextInput, View } from "react-native";
+
+export function LoginScreen() {
+	return (
+		<View>
+			<Text>Bem-vindo(a) à Taqtile!</Text>
+
+			<TextInput placeholder="E-mail" />
+
+			<TextInput placeholder="Senha" secureTextEntry={true} />
+
+			<Button title="Entrar" />
+		</View>
+	);
+}
