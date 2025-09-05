@@ -2,12 +2,12 @@
 
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
-import { HelloWorld } from "./src/components/hello-world";
+import LoginScreen from "./src/screens/login";
 
 export default function App() {
 	return (
 		<View>
-			<HelloWorld />
+			<LoginScreen />
 			<StatusBar style="auto" />
 		</View>
 	);
