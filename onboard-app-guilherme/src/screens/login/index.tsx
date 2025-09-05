@@ -7,7 +7,7 @@ export function LoginScreen() {
 
 			<TextInput placeholder="E-mail" />
 
-			<TextInput placeholder="Senha" secureTextEntry={true} />
+			<TextInput placeholder="Senha" secureTextEntry />
 
 			<Button title="Entrar" />
 		</View>
