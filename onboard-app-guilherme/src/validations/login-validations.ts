@@ -1,6 +1,6 @@
 import { emailRegex, hasDigitRegex, hasLetterRegex } from "../utils/regex";
 
-export type LoginErrors = {
+export interface LoginErrors {
   email?: string;
   password?: string;
 };
