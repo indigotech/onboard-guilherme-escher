@@ -3,7 +3,12 @@ import { emailRegex, hasDigitRegex, hasLetterRegex } from "../utils/regex";
 export interface LoginErrors {
   email?: string;
   password?: string;
-};
+}
+
+export interface LoginForm {
+  email: string;
+  password: string;
+}
 
 export function validateEmail(email: string): string | null {
   if (!email) {
@@ -28,7 +33,7 @@ export function validatePassword(password: string): string | null {
   return null;
 }
 
-export function validateLoginForm(email: string, password: string): LoginErrors {
+export function validateLoginForm({ email, password }: LoginForm): LoginErrors {
   const errors: LoginErrors = {};
   const emailError = validateEmail(email);
   const passError = validatePassword(password);

@@ -8,7 +8,7 @@ export default function LoginScreen() {
   const [errors, setErrors] = useState<LoginErrors>({});
 
   function handleSubmit() {
-    const newErrors = validateLoginForm(email, password);
+    const newErrors = validateLoginForm({ email, password });
 
     if (newErrors.email || newErrors.password) {
       setErrors(newErrors);
@@ -41,7 +41,7 @@ export default function LoginScreen() {
         value={email}
         onChangeText={(text) => handleInputChange("email", text)}
       />
-      {errors.email ? <Text>{errors.email}</Text> : null}
+      {!!errors.email && <Text>{errors.email}</Text>}
 
       <TextInput
         testID="password-input"
