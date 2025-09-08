@@ -50,7 +50,7 @@ export default function LoginScreen() {
         value={password}
         onChangeText={(text) => handleInputChange("password", text)}
       />
-      {errors.password ? <Text>{errors.password}</Text> : null}
+      {!!errors.password && <Text>{errors.password}</Text>}
 
       <Button testID="submit-button" title="Entrar" onPress={handleSubmit} />
     </View>
