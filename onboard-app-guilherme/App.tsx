@@ -1,14 +1,13 @@
 // src/App.tsx
 
-import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
+import { ApolloProvider } from "@apollo/client/react";
+import client from "./src/config/apolloClient";
 import LoginScreen from "./src/screens/login";
 
 export default function App() {
-	return (
-		<View>
-			<LoginScreen />
-			<StatusBar style="auto" />
-		</View>
-	);
+  return (
+    <ApolloProvider client={client}>
+      <LoginScreen />
+    </ApolloProvider>
+  );
 }

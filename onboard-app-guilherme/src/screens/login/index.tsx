@@ -1,5 +1,9 @@
+import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { LOGIN_MUTATION } from "../../graphql/mutations";
+import type { LoginResponse, LoginVariables } from "../../graphql/types";
+import { saveToken } from "../../storage/auth";
 import { type LoginErrors, validateLoginForm } from "../../validations/login-validations";
 
 export default function LoginScreen() {
@@ -7,14 +11,28 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<LoginErrors>({});
 
-  function handleSubmit() {
+  const [login, { loading }] = useMutation<LoginResponse, LoginVariables>(LOGIN_MUTATION);
+
+  async function handleSubmit() {
     const newErrors = validateLoginForm({ email, password });
 
     if (newErrors.email || newErrors.password) {
       setErrors(newErrors);
       return;
     }
-    console.log("Login OK", { email, password });
+
+    try {
+      const { data } = await login({ variables: { email, password } });
+
+      if (data?.login?.token) {
+        await saveToken(data.login.token);
+        console.log(data.login.token);
+        Alert.alert("Success", "Login completed");
+      }
+    } catch (error: any) {
+      const errorMessage = error?.graphQLErrors?.[0]?.message || `Unexpected error${error}`;
+      Alert.alert("Error", errorMessage);
+    }
   }
 
   function handleInputChange(fieldName: "email" | "password", text: string) {
@@ -52,7 +70,9 @@ export default function LoginScreen() {
       />
       {!!errors.password && <Text>{errors.password}</Text>}
 
-      <Button testID="submit-button" title="Entrar" onPress={handleSubmit} />
+      <TouchableOpacity testID="submit-button" onPress={handleSubmit} disabled={loading}>
+        {loading ? <ActivityIndicator /> : <Text>Entrar</Text>}
+      </TouchableOpacity>
     </View>
   );
 }
