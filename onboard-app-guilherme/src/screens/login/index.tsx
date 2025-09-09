@@ -26,7 +26,6 @@ export default function LoginScreen() {
 
       if (data?.login?.token) {
         await saveToken(data.login.token);
-        console.log(data.login.token);
         Alert.alert("Success", "Login completed");
       }
     } catch (error: any) {
