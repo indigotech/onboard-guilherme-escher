@@ -39,3 +39,5 @@ yarn-error.*
 # native
 android/
 ios/
+
+ios/Podfile.lock
