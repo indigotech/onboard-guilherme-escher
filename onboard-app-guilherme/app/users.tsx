@@ -1,24 +1,36 @@
-import { FlatList, Text, View } from "react-native";
+import { useQuery } from "@apollo/client/react";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { UserItem } from "../src/components/user-item";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-const fakeUsers: User[] = [
-  { id: "1", name: "Astolfo Johnson", email: "astolfo@gmail.com" },
-  { id: "2", name: "Beralda Silva", email: "beralda@gmail.com" },
-  { id: "3", name: "Rodrigo Raimond", email: "rodrigo@gmail.com" },
-];
+import { USERS_QUERY } from "../src/graphql/queries";
+import type { UsersQueryResponse } from "../src/graphql/types";
 
 export default function UsersScreen() {
+  const { data, loading, error } = useQuery<UsersQueryResponse>(USERS_QUERY);
+
+  if (loading) {
+    return (
+      <View>
+        <ActivityIndicator />
+        <Text>Loading users...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text>Error loading users: {error.message}</Text>
+      </View>
+    );
+  }
+
+  const users = data?.users.nodes ?? [];
+
   return (
     <View>
       <Text>Users List</Text>
       <FlatList
-        data={fakeUsers}
+        data={users}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <UserItem name={item.name} email={item.email} />}
       />
