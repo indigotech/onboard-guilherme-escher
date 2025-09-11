@@ -3,7 +3,7 @@ import { useState } from "react";
 import { USERS_QUERY } from "../graphql/queries";
 import type { UsersQueryResponse } from "../graphql/types";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 30;
 
 export function usePaginatedUsers() {
   const [page, setPage] = useState(0);
@@ -14,15 +14,19 @@ export function usePaginatedUsers() {
   });
 
   const users = data?.users.nodes ?? [];
+  const hasNextPage = data?.users.pageInfo.hasNextPage ?? false;
+  const hasPreviousPage = page > 0 && (data?.users.pageInfo.hasPreviousPage ?? false);
 
   function nextPage() {
-    if (users.length === PAGE_SIZE) {
+    if (hasNextPage) {
       setPage((prev) => prev + 1);
     }
   }
 
   function prevPage() {
-    setPage((prev) => Math.max(prev - 1, 0));
+    if (hasPreviousPage) {
+      setPage((prev) => Math.max(prev - 1, 0));
+    }
   }
 
   return {
@@ -33,6 +37,8 @@ export function usePaginatedUsers() {
     refetch,
     nextPage,
     prevPage,
+    hasNextPage,
+    hasPreviousPage,
     PAGE_SIZE,
   };
 }

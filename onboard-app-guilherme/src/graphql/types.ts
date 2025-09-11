@@ -9,6 +9,13 @@ export interface LoginVariables {
   password: string;
 }
 
+export interface PageInfo {
+  offset: number;
+  limit: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -18,5 +25,6 @@ export interface User {
 export interface UsersQueryResponse {
   users: {
     nodes: User[];
+    pageInfo: PageInfo;
   };
 }

@@ -8,6 +8,12 @@ export const USERS_QUERY = gql`
         name
         email
       }
+      pageInfo {
+        offset
+        limit
+        hasNextPage
+        hasPreviousPage
+      }
     }
   }
 `;
