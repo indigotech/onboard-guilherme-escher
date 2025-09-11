@@ -1,12 +1,14 @@
 import { useMutation } from "@apollo/client/react";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { LOGIN_MUTATION } from "../../graphql/mutations";
-import type { LoginResponse, LoginVariables } from "../../graphql/types";
-import { saveToken } from "../../storage/auth";
-import { type LoginErrors, validateLoginForm } from "../../validations/login-validations";
+import { LOGIN_MUTATION } from "../src/graphql/mutations";
+import type { LoginResponse, LoginVariables } from "../src/graphql/types";
+import { saveToken } from "../src/storage/auth";
+import { type LoginErrors, validateLoginForm } from "../src/validations/login-validations";
 
 export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<LoginErrors>({});
@@ -26,7 +28,7 @@ export default function LoginScreen() {
 
       if (data?.login?.token) {
         await saveToken(data.login.token);
-        Alert.alert("Success", "Login completed");
+        router.replace("/users");
       }
     } catch (error: any) {
       const errorMessage = error?.graphQLErrors?.[0]?.message || `Unexpected error${error}`;
