@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client/react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
 import { UserItem } from "../src/components/user-item";
 import { USERS_QUERY } from "../src/graphql/queries";
 import type { UsersQueryResponse } from "../src/graphql/types";
 
 export default function UsersScreen() {
-  const { data, loading, error } = useQuery<UsersQueryResponse>(USERS_QUERY);
+  const { data, loading, error, refetch } = useQuery<UsersQueryResponse>(USERS_QUERY);
 
   if (loading) {
     return (
@@ -18,8 +18,11 @@ export default function UsersScreen() {
 
   if (error) {
     return (
-      <View>
+      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
         <Text>Error loading users: {error.message}</Text>
+        <TouchableOpacity onPress={() => refetch()}>
+          <Text>Try Again</Text>
+        </TouchableOpacity>
       </View>
     );
   }
