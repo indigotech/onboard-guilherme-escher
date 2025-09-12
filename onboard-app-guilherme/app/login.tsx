@@ -27,7 +27,8 @@ export default function LoginScreen() {
       const { data } = await login({ variables: { email, password } });
 
       if (data?.login?.token) {
-        await saveToken(data.login.token);
+        const rawToken = data.login.token.replace(/^Bearer\s+/i, "");
+        await saveToken(rawToken);
         router.replace("/users");
       }
     } catch (error: any) {
