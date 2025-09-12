@@ -1,29 +1,48 @@
+import { useMutation } from "@apollo/client/react";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { type UserFormErrors, validateUserForm } from "../src/validations/user-validations";
+import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { CREATE_USER_MUTATION } from "../src/graphql/mutations";
+
+import type { CreateUserResponse, CreateUserVariables } from "../src/graphql/types";
 
 export default function AddUserScreen() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState("");
-  const [role, setRole] = useState<"ADMIN" | "USER">("USER");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"admin" | "user">("user");
 
-  const [errors, setErrors] = useState<UserFormErrors>({});
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [createUser, { loading }] = useMutation<CreateUserResponse, CreateUserVariables>(CREATE_USER_MUTATION);
 
-  function handleSubmit() {
-    const validationErrors = validateUserForm({ name, email, phone, birthDate, role });
-    setErrors(validationErrors);
-  }
+  async function handleSubmit() {
+    try {
+      setErrorMessage(null);
 
-  function handleChange(field: keyof UserFormErrors, value: string) {
-    if (field === "name") setName(value);
-    if (field === "email") setEmail(value);
-    if (field === "phone") setPhone(value);
-    if (field === "birthDate") setBirthDate(value);
+      const isoBirthDate = new Date(birthDate).toISOString();
 
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
+      const { data } = await createUser({
+        variables: {
+          data: {
+            name,
+            email,
+            phone,
+            birthDate: isoBirthDate,
+            password,
+            role,
+          },
+        },
+      });
+      if (data?.createUser) {
+        router.replace("/users");
+      }
+    } catch (err: any) {
+      const msg = err?.graphQLErrors?.[0]?.message || err?.message || "Erro inesperado";
+      setErrorMessage(msg);
     }
   }
 
@@ -31,39 +50,25 @@ export default function AddUserScreen() {
     <View>
       <Text>Adicionar Usuário</Text>
 
-      <TextInput placeholder="Nome completo" value={name} onChangeText={(v) => handleChange("name", v)} />
-      {!!errors.name && <Text>{errors.name}</Text>}
-
-      <TextInput placeholder="E-mail" value={email} onChangeText={(v) => handleChange("email", v)} />
-      {!!errors.email && <Text>{errors.email}</Text>}
-
-      <TextInput
-        placeholder="Telefone"
-        keyboardType="numeric"
-        value={phone}
-        onChangeText={(v) => handleChange("phone", v)}
-      />
-      {!!errors.phone && <Text>{errors.phone}</Text>}
-
-      <TextInput
-        placeholder="Data de nascimento (YYYY-MM-DD)"
-        value={birthDate}
-        onChangeText={(v) => handleChange("birthDate", v)}
-      />
-      {!!errors.birthDate && <Text>{errors.birthDate}</Text>}
+      <TextInput placeholder="Nome completo" value={name} onChangeText={setName} />
+      <TextInput placeholder="E-mail" value={email} onChangeText={setEmail} />
+      <TextInput placeholder="Telefone" keyboardType="numeric" value={phone} onChangeText={setPhone} />
+      <TextInput placeholder="Data de nascimento (YYYY-MM-DD)" value={birthDate} onChangeText={setBirthDate} />
+      <TextInput placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
 
       <View>
-        <TouchableOpacity onPress={() => setRole("USER")}>
-          <Text>{role === "USER" ? "[X] USER" : "[ ] USER"}</Text>
+        <TouchableOpacity onPress={() => setRole("user")}>
+          <Text>{role === "user" ? "[X] user" : "[ ] user"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setRole("ADMIN")}>
-          <Text>{role === "ADMIN" ? "[X] ADMIN" : "[ ] ADMIN"}</Text>
+        <TouchableOpacity onPress={() => setRole("admin")}>
+          <Text>{role === "admin" ? "[X] admin" : "[ ] admin"}</Text>
         </TouchableOpacity>
       </View>
-      {!!errors.role && <Text>{errors.role}</Text>}
 
-      <TouchableOpacity onPress={handleSubmit}>
-        <Text>Adicionar Usuário</Text>
+      {errorMessage && <Text>{errorMessage}</Text>}
+
+      <TouchableOpacity onPress={handleSubmit} disabled={loading}>
+        {loading ? <ActivityIndicator /> : <Text>Salvar Usuário</Text>}
       </TouchableOpacity>
     </View>
   );
