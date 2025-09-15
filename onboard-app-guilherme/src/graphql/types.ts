@@ -28,3 +28,25 @@ export interface UsersQueryResponse {
     pageInfo: PageInfo;
   };
 }
+
+export interface CreateUserResponse {
+  createUser: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    birthDate: string;
+    role: "admin" | "user";
+  };
+}
+
+export interface CreateUserVariables {
+  data: {
+    name: string;
+    email: string;
+    phone: string;
+    birthDate: string;
+    password: string;
+    role: "admin" | "user";
+  };
+}

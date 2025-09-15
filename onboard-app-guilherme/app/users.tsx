@@ -6,7 +6,8 @@ import { clearToken } from "../src/storage/auth";
 
 export default function UsersScreen() {
   const router = useRouter();
-  const { users, page, loading, error, refetch, nextPage, prevPage, PAGE_SIZE } = usePaginatedUsers();
+  const { users, page, loading, error, refetch, nextPage, prevPage, hasNextPage, hasPreviousPage } =
+    usePaginatedUsers();
 
   async function handleLogout() {
     await clearToken();
@@ -51,18 +52,22 @@ export default function UsersScreen() {
         renderItem={({ item }) => <UserItem name={item.name} email={item.email} />}
         ListFooterComponent={
           <View>
-            <TouchableOpacity disabled={page === 0} onPress={prevPage}>
+            <TouchableOpacity disabled={!hasPreviousPage} onPress={prevPage}>
               <Text>Anterior</Text>
             </TouchableOpacity>
 
             <Text>Página {page + 1}</Text>
 
-            <TouchableOpacity disabled={users.length < PAGE_SIZE} onPress={nextPage}>
+            <TouchableOpacity disabled={!hasNextPage} onPress={nextPage}>
               <Text>Próxima</Text>
             </TouchableOpacity>
           </View>
         }
       />
+
+      <TouchableOpacity onPress={() => router.push("/add-user")}>
+        <Text>Adicionar Usuário</Text>
+      </TouchableOpacity>
     </View>
   );
 }
