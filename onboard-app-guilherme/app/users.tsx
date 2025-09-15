@@ -49,7 +49,7 @@ export default function UsersScreen() {
       <FlatList
         data={users}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <UserItem name={item.name} email={item.email} />}
+        renderItem={({ item }) => <UserItem id={item.id} name={item.name} email={item.email} />}
         ListFooterComponent={
           <View>
             <TouchableOpacity disabled={!hasPreviousPage} onPress={prevPage}>
