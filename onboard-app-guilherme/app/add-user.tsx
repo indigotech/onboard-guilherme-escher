@@ -65,7 +65,7 @@ export default function AddUserScreen() {
         </TouchableOpacity>
       </View>
 
-      {errorMessage && <Text>{errorMessage}</Text>}
+      {!!errorMessage && <Text>{errorMessage}</Text>}
 
       <TouchableOpacity onPress={handleSubmit} disabled={loading}>
         {loading ? <ActivityIndicator /> : <Text>Salvar Usuário</Text>}
