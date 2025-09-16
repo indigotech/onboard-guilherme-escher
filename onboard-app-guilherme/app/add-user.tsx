@@ -1,9 +1,10 @@
 import { useMutation } from "@apollo/client/react";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { FormField } from "../src/components/form-field";
+import { PrimaryButton } from "../src/components/primary-button";
 import { CREATE_USER_MUTATION } from "../src/graphql/mutations";
-
 import type { CreateUserResponse, CreateUserVariables } from "../src/graphql/types";
 
 export default function AddUserScreen() {
@@ -50,11 +51,11 @@ export default function AddUserScreen() {
     <View>
       <Text>Adicionar Usuário</Text>
 
-      <TextInput placeholder="Nome completo" value={name} onChangeText={setName} />
-      <TextInput placeholder="E-mail" value={email} onChangeText={setEmail} />
-      <TextInput placeholder="Telefone" keyboardType="numeric" value={phone} onChangeText={setPhone} />
-      <TextInput placeholder="Data de nascimento (YYYY-MM-DD)" value={birthDate} onChangeText={setBirthDate} />
-      <TextInput placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
+      <FormField placeholder="Nome completo" value={name} onChangeText={setName} />
+      <FormField placeholder="E-mail" value={email} onChangeText={setEmail} />
+      <FormField placeholder="Telefone" keyboardType="numeric" value={phone} onChangeText={setPhone} />
+      <FormField placeholder="Data de nascimento (YYYY-MM-DD)" value={birthDate} onChangeText={setBirthDate} />
+      <FormField placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
 
       <View>
         <TouchableOpacity onPress={() => setRole("user")}>
@@ -67,9 +68,7 @@ export default function AddUserScreen() {
 
       {!!errorMessage && <Text>{errorMessage}</Text>}
 
-      <TouchableOpacity onPress={handleSubmit} disabled={loading}>
-        {loading ? <ActivityIndicator /> : <Text>Salvar Usuário</Text>}
-      </TouchableOpacity>
+      <PrimaryButton title="Salvar Usuário" onPress={handleSubmit} loading={loading} />
     </View>
   );
 }
