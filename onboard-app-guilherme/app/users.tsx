@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { useCallback } from "react";
 import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
 import { UserItem } from "../src/components/user-item";
 import { usePaginatedUsers } from "../src/hooks/usePaginatedUsers";
@@ -13,6 +14,13 @@ export default function UsersScreen() {
     await clearToken();
     router.replace("/login");
   }
+
+  const renderItem = useCallback(
+    ({ item }: { item: { id: string; name: string; email: string } }) => (
+      <UserItem id={item.id} name={item.name} email={item.email} />
+    ),
+    [],
+  );
 
   if (loading) {
     return (
@@ -49,7 +57,7 @@ export default function UsersScreen() {
       <FlatList
         data={users}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <UserItem name={item.name} email={item.email} />}
+        renderItem={renderItem}
         ListFooterComponent={
           <View>
             <TouchableOpacity disabled={!hasPreviousPage} onPress={prevPage}>

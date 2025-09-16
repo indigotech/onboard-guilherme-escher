@@ -50,3 +50,18 @@ export interface CreateUserVariables {
     role: "admin" | "user";
   };
 }
+
+export interface UserDetailsResponse {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    birthDate: string;
+    role: "admin" | "user";
+  };
+}
+
+export interface UserDetailsVariables {
+  id: string;
+}
