@@ -2,10 +2,11 @@ import { useMutation } from "@apollo/client/react";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform, SafeAreaView, Text, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, SafeAreaView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { FormField } from "../src/components/form-field";
 import { PrimaryButton } from "../src/components/primary-button";
+import { ScreenHeader } from "../src/components/screen-header";
 import { LOGIN_MUTATION } from "../src/graphql/mutations";
 import type { LoginResponse, LoginVariables } from "../src/graphql/types";
 import { saveToken } from "../src/storage/auth";
@@ -62,11 +63,7 @@ export default function LoginScreen() {
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <View style={styles.content}>
           <View style={styles.card}>
-            <View style={styles.header}>
-              <Text style={styles.title}>Bem-vindo(a) à Taqtile!</Text>
-              <Text style={styles.subtitle}>Faça login para continuar</Text>
-              <View style={styles.divider} />
-            </View>
+            <ScreenHeader title="Bem-vindo(a) à Taqtile!" subtitle="Faça login para continuar" variant="centered" />
 
             <FormField
               testID="email-input"
@@ -107,27 +104,6 @@ const stylesheet = StyleSheet.create((theme) => ({
     flex: 1,
     justifyContent: "center",
     padding: theme.spacing.xl,
-  },
-  header: {
-    alignItems: "center",
-  },
-  title: {
-    ...theme.typography.h1,
-    color: theme.colors.text,
-    textAlign: "center",
-  },
-  subtitle: {
-    ...theme.typography.body,
-    color: theme.colors.textSecondary,
-    marginTop: theme.spacing.sm,
-    textAlign: "center",
-  },
-  divider: {
-    height: 1,
-    width: "75%",
-    backgroundColor: theme.colors.border,
-    marginTop: theme.spacing.lg,
-    marginBottom: theme.spacing.xl,
   },
   card: {
     backgroundColor: theme.colors.surface,

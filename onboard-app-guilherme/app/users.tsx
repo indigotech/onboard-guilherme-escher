@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { useCallback } from "react";
 import { ActivityIndicator, FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { ScreenHeader } from "../src/components/screen-header";
 import { UserItem } from "../src/components/user-item";
 import { usePaginatedUsers } from "../src/hooks/usePaginatedUsers";
 import { clearToken } from "../src/storage/auth";
@@ -31,7 +32,7 @@ export default function UsersScreen() {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.centeredContainer}>
-          <ActivityIndicator size="large" color={styles.title.color} />
+          <ActivityIndicator size="large" color={stylesheet.logoutText.color} />
           <Text style={styles.loadingText}>Carregando usuários...</Text>
         </View>
       </SafeAreaView>
@@ -53,15 +54,20 @@ export default function UsersScreen() {
       </SafeAreaView>
     );
   }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
-      <View style={styles.header}>
-        <Text style={styles.title}>Usuários</Text>
-        <TouchableOpacity onPress={handleLogout}>
-          <Text style={styles.logoutText}>Sair</Text>
-        </TouchableOpacity>
-      </View>
+
+      <ScreenHeader
+        title="Usuários"
+        variant="page"
+        rightAction={
+          <TouchableOpacity onPress={handleLogout}>
+            <Text style={styles.logoutText}>Sair</Text>
+          </TouchableOpacity>
+        }
+      />
 
       <FlatList
         data={users}
@@ -135,25 +141,13 @@ const stylesheet = StyleSheet.create((theme) => ({
     ...theme.typography.button,
     color: theme.colors.onPrimary,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: theme.spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
-  },
-  title: {
-    ...theme.typography.h2,
-    color: theme.colors.text,
-  },
   logoutText: {
     ...theme.typography.body,
     color: theme.colors.primary,
     fontWeight: "bold",
   },
   listContentContainer: {
-    paddingVertical: theme.spacing.md,
+    paddingTop: theme.spacing.sm,
     paddingBottom: 100,
   },
   emptyText: {

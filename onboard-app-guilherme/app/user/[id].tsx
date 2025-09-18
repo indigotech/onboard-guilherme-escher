@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { ScreenHeader } from "../../src/components/screen-header";
 import { GET_USER_QUERY } from "../../src/graphql/queries";
 import type { UserDetailsResponse, UserDetailsVariables } from "../../src/graphql/types";
 
@@ -30,9 +31,9 @@ export default function UserDetailsScreen() {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea}>
+        <ScreenHeader title="Carregando..." variant="page" />
         <View style={styles.centeredContainer}>
-          <ActivityIndicator size="large" color={styles.headerTitle.color} />
-          <Text style={styles.messageText}>Carregando usuário...</Text>
+          <ActivityIndicator size="large" color={stylesheet.detailValue.color} />
         </View>
       </SafeAreaView>
     );
@@ -41,11 +42,17 @@ export default function UserDetailsScreen() {
   if (error || !data?.user) {
     return (
       <SafeAreaView style={styles.safeArea}>
+        <ScreenHeader
+          title="Erro"
+          variant="page"
+          leftAction={
+            <TouchableOpacity onPress={() => router.back()}>
+              <Feather name="chevron-left" size={28} color={stylesheet.detailValue.color} />
+            </TouchableOpacity>
+          }
+        />
         <View style={styles.centeredContainer}>
           <Text style={styles.errorText}>{error ? "Erro ao carregar usuário." : "Usuário não encontrado."}</Text>
-          <TouchableOpacity style={styles.button} onPress={() => router.back()}>
-            <Text style={styles.buttonText}>Voltar</Text>
-          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -67,13 +74,15 @@ export default function UserDetailsScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Feather name="chevron-left" size={28} color={styles.headerTitle.color} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Detalhes do Usuário</Text>
-        <View style={{ width: 40 }} />
-      </View>
+      <ScreenHeader
+        title="Detalhes"
+        variant="page"
+        leftAction={
+          <TouchableOpacity onPress={() => router.back()}>
+            <Feather name="chevron-left" size={28} color={stylesheet.detailValue.color} />
+          </TouchableOpacity>
+        }
+      />
 
       <View style={styles.contentContainer}>
         <View style={styles.avatarContainer}>
@@ -114,30 +123,6 @@ const stylesheet = StyleSheet.create((theme) => ({
     color: theme.colors.error,
     textAlign: "center",
     marginBottom: theme.spacing.lg,
-  },
-  button: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.lg,
-    borderRadius: 20,
-  },
-  buttonText: {
-    ...theme.typography.button,
-    color: theme.colors.onPrimary,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: theme.spacing.md,
-    paddingHorizontal: theme.spacing.md,
-  },
-  headerTitle: {
-    ...theme.typography.h2,
-    color: theme.colors.text,
-  },
-  backButton: {
-    padding: theme.spacing.sm,
   },
   contentContainer: {
     flex: 1,

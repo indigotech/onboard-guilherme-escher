@@ -15,6 +15,7 @@ import {
 import { StyleSheet } from "react-native-unistyles";
 import { FormField } from "../src/components/form-field";
 import { PrimaryButton } from "../src/components/primary-button";
+import { ScreenHeader } from "../src/components/screen-header";
 import { CREATE_USER_MUTATION } from "../src/graphql/mutations";
 import type { CreateUserResponse, CreateUserVariables } from "../src/graphql/types";
 
@@ -75,9 +76,7 @@ export default function AddUserScreen() {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Adicionar Novo Usuário</Text>
-        </View>
+        <ScreenHeader title="Adicionar Novo Usuário" variant="page" />
 
         <ScrollView
           style={styles.container}
@@ -144,17 +143,6 @@ const stylesheet = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
   },
-  header: {
-    padding: theme.spacing.lg,
-    paddingBottom: theme.spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
-    alignItems: "center",
-  },
-  title: {
-    ...theme.typography.h2,
-    color: theme.colors.text,
-  },
   formContainer: {
     padding: theme.spacing.lg,
   },
@@ -198,10 +186,8 @@ const stylesheet = StyleSheet.create((theme) => ({
   buttonContainer: {
     flexDirection: "row",
     marginTop: theme.spacing.md,
-    // A propriedade `gap` cria um espaçamento entre os botões
     gap: theme.spacing.md,
   },
-  // Novo estilo para os botões dentro do container
   actionButton: {
     flex: 1,
   },
