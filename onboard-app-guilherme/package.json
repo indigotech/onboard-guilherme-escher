@@ -24,7 +24,8 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-unistyles": "^3.0.12",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "@expo/vector-icons": "^14.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
+import { stylesheet } from "./styles";
 
 interface UserItemProps {
   id: string;
@@ -9,16 +10,21 @@ interface UserItemProps {
 
 export function UserItem({ id, name, email }: UserItemProps) {
   const router = useRouter();
+  const styles = stylesheet;
 
   function handlePress() {
     router.push(`/user/${id}`);
   }
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity style={styles.card} onPress={handlePress} activeOpacity={0.7}>
       <View>
-        <Text>{name}</Text>
-        <Text>{email}</Text>
+        <Text style={styles.name} numberOfLines={1}>
+          {name}
+        </Text>
+        <Text style={styles.email} numberOfLines={1}>
+          {email}
+        </Text>
       </View>
     </TouchableOpacity>
   );

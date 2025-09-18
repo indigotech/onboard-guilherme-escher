@@ -1,5 +1,8 @@
-import { HelloWorldText } from "./styles";
+import { Text } from "react-native";
+import { stylesheet } from "./styles";
 
 export function HelloWorld() {
-	return <HelloWorldText>Hello World</HelloWorldText>;
+  const styles = stylesheet;
+
+  return <Text style={styles.helloText}>Hello World</Text>;
 }

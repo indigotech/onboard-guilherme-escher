@@ -6,7 +6,11 @@ import client from "../src/config/apolloClient";
 export default function Layout() {
   return (
     <ApolloProvider client={client}>
-      <Stack />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
     </ApolloProvider>
   );
 }

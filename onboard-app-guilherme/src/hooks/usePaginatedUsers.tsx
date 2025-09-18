@@ -3,7 +3,7 @@ import { useState } from "react";
 import { USERS_QUERY } from "../graphql/queries";
 import type { UsersQueryResponse } from "../graphql/types";
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 10;
 
 export function usePaginatedUsers() {
   const [page, setPage] = useState(0);

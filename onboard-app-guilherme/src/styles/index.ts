@@ -8,14 +8,26 @@ const breakpoints = {
   xl: 1200,
 } as const;
 
+const sharedColors = {
+  pink: "#E83F6F",
+  pinkLight: "#FF8EAF",
+  white: "#FFFFFF",
+  black: "#000000",
+  success: "#28a745",
+};
+
 const lightTheme = {
   colors: {
-    primary: "#007bff",
-    onPrimary: "#ffffff",
-    background: "#f8f9fa",
-    text: "#212529",
-    border: "#ced4da",
+    primary: sharedColors.pink,
+    primaryLight: sharedColors.pinkLight,
+    onPrimary: sharedColors.white,
+    background: "#F7F7F9",
+    surface: sharedColors.white,
+    text: "#2B2B2B",
+    textSecondary: "#6E6E6E",
+    border: "#EAEAEA",
     error: "#dc3545",
+    success: sharedColors.success,
   },
   spacing: {
     xs: 4,
@@ -23,17 +35,28 @@ const lightTheme = {
     md: 16,
     lg: 24,
     xl: 32,
+  },
+  typography: {
+    h1: { fontFamily: "System", fontSize: 32, fontWeight: "bold" },
+    h2: { fontFamily: "System", fontSize: 24, fontWeight: "bold" },
+    body: { fontFamily: "System", fontSize: 16, fontWeight: "normal" },
+    button: { fontFamily: "System", fontSize: 16, fontWeight: "bold" },
+    caption: { fontFamily: "System", fontSize: 12, fontWeight: "normal" },
   },
 } as const;
 
 const darkTheme = {
   colors: {
-    primary: "#007bff",
-    onPrimary: "#ffffff",
-    background: "#212529",
-    text: "#f8f9fa",
-    border: "#495057",
+    primary: sharedColors.pink,
+    primaryLight: sharedColors.pinkLight,
+    onPrimary: sharedColors.white,
+    background: "#121212",
+    surface: "#1E1E1E",
+    text: "#EAEAEA",
+    textSecondary: "#A5A5A5",
+    border: "#333333",
     error: "#e57373",
+    success: sharedColors.success,
   },
   spacing: {
     xs: 4,
@@ -41,6 +64,13 @@ const darkTheme = {
     md: 16,
     lg: 24,
     xl: 32,
+  },
+  typography: {
+    h1: { fontFamily: "System", fontSize: 32, fontWeight: "bold" },
+    h2: { fontFamily: "System", fontSize: 24, fontWeight: "bold" },
+    body: { fontFamily: "System", fontSize: 16, fontWeight: "normal" },
+    button: { fontFamily: "System", fontSize: 16, fontWeight: "bold" },
+    caption: { fontFamily: "System", fontSize: 12, fontWeight: "normal" },
   },
 } as const;
 
@@ -56,7 +86,7 @@ declare module "react-native-unistyles" {
 
 StyleSheet.configure({
   settings: {
-    adaptiveThemes: true,
+    initialTheme: "dark",
   },
   themes: appThemes,
   breakpoints,

@@ -1,9 +1,9 @@
-import styled from "styled-components/native";
+import { StyleSheet } from "react-native-unistyles";
 
-export const HelloWorldText = styled.Text`
-  font-size: 28px;
-  font-weight: bold;  
-  color: #333;
-  text-align: center;
-  
-`;
+export const stylesheet = StyleSheet.create((theme) => ({
+  helloText: {
+    ...theme.typography.h1,
+    color: theme.colors.primary,
+    textAlign: "center",
+  },
+}));
