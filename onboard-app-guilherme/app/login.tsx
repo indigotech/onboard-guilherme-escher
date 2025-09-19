@@ -1,7 +1,12 @@
 import { useMutation } from "@apollo/client/react";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, SafeAreaView, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
+import { FormField } from "../src/components/form-field/form-field";
+import { PrimaryButton } from "../src/components/primary-button/primary-button";
+import { ScreenHeader } from "../src/components/screen-header/screen-header";
 import { LOGIN_MUTATION } from "../src/graphql/mutations";
 import type { LoginResponse, LoginVariables } from "../src/graphql/types";
 import { saveToken } from "../src/storage/auth";
@@ -14,6 +19,8 @@ export default function LoginScreen() {
   const [errors, setErrors] = useState<LoginErrors>({});
 
   const [login, { loading }] = useMutation<LoginResponse, LoginVariables>(LOGIN_MUTATION);
+
+  const styles = stylesheet;
 
   async function handleSubmit() {
     const newErrors = validateLoginForm({ email, password });
@@ -50,31 +57,63 @@ export default function LoginScreen() {
   }
 
   return (
-    <View>
-      <Text>Bem-vindo(a) à Taqtile!</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar style="light" />
 
-      <TextInput
-        testID="email-input"
-        placeholder="E-mail"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={(text) => handleInputChange("email", text)}
-      />
-      {!!errors.email && <Text>{errors.email}</Text>}
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <View style={styles.content}>
+          <View style={styles.card}>
+            <ScreenHeader title="Bem-vindo(a) à Taqtile!" subtitle="Faça login para continuar" variant="centered" />
 
-      <TextInput
-        testID="password-input"
-        placeholder="Senha"
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => handleInputChange("password", text)}
-      />
-      {!!errors.password && <Text>{errors.password}</Text>}
+            <FormField
+              testID="email-input"
+              placeholder="E-mail"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={(text) => handleInputChange("email", text)}
+              error={errors.email}
+            />
 
-      <TouchableOpacity testID="submit-button" onPress={handleSubmit} disabled={loading}>
-        {loading ? <ActivityIndicator /> : <Text>Entrar</Text>}
-      </TouchableOpacity>
-    </View>
+            <FormField
+              testID="password-input"
+              placeholder="Senha"
+              secureTextEntry
+              value={password}
+              onChangeText={(text) => handleInputChange("password", text)}
+              error={errors.password}
+            />
+
+            <PrimaryButton testID="submit-button" title="Entrar" onPress={handleSubmit} loading={loading} />
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
+
+const stylesheet = StyleSheet.create((theme) => ({
+  container: {
+    flex: 1,
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    padding: theme.spacing.xl,
+  },
+  card: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.spacing.md,
+    padding: theme.spacing.lg,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 8,
+  },
+}));

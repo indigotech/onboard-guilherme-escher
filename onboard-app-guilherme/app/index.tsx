@@ -1,4 +1,3 @@
-// app/index.tsx
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
