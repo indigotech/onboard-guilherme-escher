@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
-import { stylesheet } from "./styles";
+import { stylesheet } from "./user-item-styles";
 
 interface UserItemProps {
   id: string;

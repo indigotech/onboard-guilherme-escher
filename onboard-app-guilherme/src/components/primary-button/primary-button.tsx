@@ -1,5 +1,5 @@
 import { ActivityIndicator, Text, TouchableOpacity, type TouchableOpacityProps } from "react-native";
-import { stylesheet } from "./styles";
+import { stylesheet } from "./primary-button-styles";
 
 interface PrimaryButtonProps extends TouchableOpacityProps {
   title: string;

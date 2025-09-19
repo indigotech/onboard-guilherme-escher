@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { ScreenHeader } from "../../src/components/screen-header";
+import { ScreenHeader } from "../../src/components/screen-header/screen-header";
 import { GET_USER_QUERY } from "../../src/graphql/queries";
 import type { UserDetailsResponse, UserDetailsVariables } from "../../src/graphql/types";
 

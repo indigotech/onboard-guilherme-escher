@@ -13,9 +13,9 @@ import {
   View,
 } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { FormField } from "../src/components/form-field";
-import { PrimaryButton } from "../src/components/primary-button";
-import { ScreenHeader } from "../src/components/screen-header";
+import { FormField } from "../src/components/form-field/form-field";
+import { PrimaryButton } from "../src/components/primary-button/primary-button";
+import { ScreenHeader } from "../src/components/screen-header/screen-header";
 import { CREATE_USER_MUTATION } from "../src/graphql/mutations";
 import type { CreateUserResponse, CreateUserVariables } from "../src/graphql/types";
 

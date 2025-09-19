@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { stylesheet } from "./styles";
+import { stylesheet } from "./hello-styles";
 
 export function HelloWorld() {
   const styles = stylesheet;

@@ -4,8 +4,8 @@ import { StatusBar } from "expo-status-bar";
 import { useCallback } from "react";
 import { ActivityIndicator, FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { ScreenHeader } from "../src/components/screen-header";
-import { UserItem } from "../src/components/user-item";
+import { ScreenHeader } from "../src/components/screen-header/screen-header";
+import { UserItem } from "../src/components/user-item/user-item";
 import { usePaginatedUsers } from "../src/hooks/usePaginatedUsers";
 import { clearToken } from "../src/storage/auth";
 

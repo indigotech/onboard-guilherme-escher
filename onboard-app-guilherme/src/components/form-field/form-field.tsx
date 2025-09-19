@@ -1,5 +1,5 @@
 import { Text, TextInput, type TextInputProps, View } from "react-native";
-import { stylesheet } from "./styles";
+import { stylesheet } from "./form-field-styles";
 
 interface FormFieldProps extends TextInputProps {
   error?: string;

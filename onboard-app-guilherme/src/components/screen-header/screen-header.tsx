@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Text, View } from "react-native";
-import { stylesheet } from "./styles";
+import { stylesheet } from "./screen-header-styles";
 
 interface ScreenHeaderProps {
   title: string;
